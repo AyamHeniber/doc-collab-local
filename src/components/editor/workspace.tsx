@@ -192,13 +192,14 @@ export default function Workspace({ user }: WorkspaceProps) {
         {/* Developer Profile Footer */}
         <div className="p-4 border-t border-slate-800 bg-slate-950/20 text-[10px] text-slate-500 space-y-1 mt-auto">
           <p className="font-semibold text-slate-400">Developer Profile:</p>
-          <p>Name: Ayam Heniber Meitei</p>
-          <p>
+          <p>Name: Ayam Heniber Meitei </p>
+          <p>Phone: +91 7005766068 </p>
+          {/* <p>
             GitHub: <a href="https://github.com" target="_blank" rel="noreferrer" className="text-purple-400 hover:underline">github.com</a>
           </p>
           <p>
             LinkedIn: <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-purple-400 hover:underline">linkedin.com</a>
-          </p>
+          </p> */}
         </div>
       </aside>
 
