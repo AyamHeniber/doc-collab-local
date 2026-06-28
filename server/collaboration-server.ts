@@ -7,7 +7,7 @@ import { db } from '../src/db';
 import { documents, documentCollaborators, documentVersions } from '../src/db/schema';
 import { eq, and } from 'drizzle-orm';
 
-const PORT = process.env.WS_PORT || 1234;
+const PORT = process.env.PORT || process.env.WS_PORT || 1234;
 
 const server = http.createServer((request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/plain' });
