@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Collaboration Cursor Styling */
+.collaboration-cursor__caret {
+  position: relative;
+  margin-left: -1px;
+  margin-right: -1px;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  border-color: currentColor;
+  word-break: normal;
+  pointer-events: none;
+  animation: cursor-blink 1s infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.collaboration-cursor__label {
+  position: absolute;
+  top: -1.4em;
+  left: -2px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: normal;
+  user-select: none;
+  color: #fff;
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* TipTap ProseMirror Setup */
+.ProseMirror {
+  outline: none;
+  min-height: 400px;
+  padding: 1rem;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #475569;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Standard rich text formats */
+.ProseMirror h1 { font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem; color: white; }
+.ProseMirror h2 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.75rem; color: white; }
+.ProseMirror h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; color: white; }
+.ProseMirror p { margin-bottom: 0.75rem; line-height: 1.6; }
+.ProseMirror ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+.ProseMirror ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+.ProseMirror blockquote { border-left: 4px solid #6b21a8; padding-left: 1rem; font-style: italic; color: #cbd5e1; margin-bottom: 0.75rem; }
+.ProseMirror pre { background: #0f172a; padding: 0.75rem; border-radius: 0.5rem; font-family: monospace; overflow-x: auto; margin-bottom: 0.75rem; border: 1px solid #1e293b; color: #e2e8f0; }
+.ProseMirror code { background: #1e293b; padding: 0.125rem 0.25rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.875rem; color: #f472b6; }
+
