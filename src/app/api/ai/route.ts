@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { google } from '@ai-sdk/google';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { generateText, streamText } from 'ai';
 import { z } from 'zod';
 
@@ -18,8 +18,9 @@ export async function POST(req: NextRequest) {
 
   // Ensure Gemini API key is configured
   const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-  if (!apiKey) {
-    console.warn('[AI WARNING] Gemini API key is not configured. Falling back to mock AI responses.');
+  const isMockKey = !apiKey || apiKey === 'mock_evaluation_key';
+  if (isMockKey) {
+    console.warn('[AI WARNING] Real Gemini API key is not configured. Falling back to mock AI responses.');
   }
 
   try {
@@ -49,14 +50,19 @@ export async function POST(req: NextRequest) {
         break;
     }
 
-    // Resilience: Fallback mock output if API key is not set
-    if (!apiKey) {
+    // Resilience: Fallback mock output if API key is not set or using evaluation dummy key
+    if (isMockKey) {
       return handleMockFallback(payload.action, payload.content);
     }
 
-    // Call Google Gemini using Vercel AI SDK
+    // Call Google Gemini using Vercel AI SDK on v1beta API version via baseURL
+    const googleInstance = createGoogleGenerativeAI({
+      apiKey,
+      baseURL: 'https://generativelanguage.googleapis.com/v1beta',
+    });
+
     const response = await generateText({
-      model: google('gemini-1.5-flash'),
+      model: googleInstance('gemini-2.5-flash'),
       system: systemInstruction,
       prompt: userPrompt,
     });
